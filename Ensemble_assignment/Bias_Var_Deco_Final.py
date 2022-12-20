@@ -192,7 +192,7 @@ if __name__ == "__main__":
         ##########$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$change to 500 TODO
         
         models = bagging_model_parallel(X_train_sample_new,y_train_sample_new,size_sample = 1000,
-                                        n_trees = 500,replace_tr = True, verbose = False)
+                                        n_trees = 1,replace_tr = True, verbose = False)
         
         y_pred_bagged[i] = bagging_predict_parallel(X_test,models)
         y_pred_singlelearner_bg[i] = predict(X_test,models[0])
@@ -205,39 +205,39 @@ if __name__ == "__main__":
 
     print('***************************************************************************')
 
-    print('CALCULATING THE BIAS AND VARIANCE OF RANDOM FOREST AND SINGLE LEARNER TREE')
+    # print('CALCULATING THE BIAS AND VARIANCE OF RANDOM FOREST AND SINGLE LEARNER TREE')
 
 
-    y_pred_rf = {}
-    y_pred_singlelearner_rf = {}
+    # y_pred_rf = {}
+    # y_pred_singlelearner_rf = {}
 
 
-    print('CALCULATING THE BIAS AND VARIANCE OF RANDOM FOREST AND SINGLE LEARNER TREE')
+    # print('CALCULATING THE BIAS AND VARIANCE OF RANDOM FOREST AND SINGLE LEARNER TREE')
 
-    for i in tqdm(range(100)):##########$$$$$$$$$$$$$$$$$$$change to 100
+    # for i in tqdm(range(100)):##########$$$$$$$$$$$$$$$$$$$change to 100
         
-        index = np.arange(X_train.shape[0])
-        idx = np.random.choice(index, size=1000, replace=False)
+    #     index = np.arange(X_train.shape[0])
+    #     idx = np.random.choice(index, size=1000, replace=False)
         
-        X_train_sample = X_train.loc[idx,:]
-        y_train_sample = y_train_n.loc[idx]
+    #     X_train_sample = X_train.loc[idx,:]
+    #     y_train_sample = y_train_n.loc[idx]
         
-        X_train_sample_new = X_train_sample.reset_index(drop = True)
-        y_train_sample_new = y_train_sample.reset_index(drop = True)
+    #     X_train_sample_new = X_train_sample.reset_index(drop = True)
+    #     y_train_sample_new = y_train_sample.reset_index(drop = True)
         
-                                            ##########$$$$$$$$$$$$$$$$$$$change to n_trees 500
-        models_rf = rf_model_parallel(X_train_sample_new,y_train_sample_new,size_sample = 1000,
-                                        size_features= 16,n_trees = 100,replace_tr = True, verbose = False)
+    #                                         ##########$$$$$$$$$$$$$$$$$$$change to n_trees 500
+    #     models_rf = rf_model_parallel(X_train_sample_new,y_train_sample_new,size_sample = 1000,
+    #                                     size_features= 16,n_trees = 100,replace_tr = True, verbose = False)
         
-        y_pred_rf[i] =rf_predict_parallel(X_test,models_rf)
-        y_pred_singlelearner_rf[i] = predict(X_test,models_rf[0])
+    #     y_pred_rf[i] =rf_predict_parallel(X_test,models_rf)
+    #     y_pred_singlelearner_rf[i] = predict(X_test,models_rf[0])
         
-    y_pred_rf = pd.DataFrame(y_pred_rf)
-    y_pred_singlelearner_rf = pd.DataFrame(y_pred_singlelearner_rf)
+    # y_pred_rf = pd.DataFrame(y_pred_rf)
+    # y_pred_singlelearner_rf = pd.DataFrame(y_pred_singlelearner_rf)
 
         
-    print('bias and variance of Random Forest 100 times 500 trees',bias_var_calc(y_test_n,y_pred_rf))   
-    print('bias and variance of Random Forest single learner',bias_var_calc(y_test_n,y_pred_singlelearner_rf))   
+    # print('bias and variance of Random Forest 100 times 500 trees',bias_var_calc(y_test_n,y_pred_rf))   
+    # print('bias and variance of Random Forest single learner',bias_var_calc(y_test_n,y_pred_singlelearner_rf))   
 
 
 
